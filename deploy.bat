@@ -10,13 +10,9 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-REM 获取GitHub仓库URL
-set /p repo_url=https://github.com/MikeYueng9911/test2.git (例如: https://github.com/username/repo.git): 
-
-if "%repo_url%"=="" (
-    echo 错误: 仓库URL不能为空
-    exit /b 1
-)
+REM 设置GitHub仓库URL
+set repo_url=https://github.com/MikeYueng9911/test2.git
+echo 使用仓库: %repo_url%
 
 REM 初始化Git仓库
 echo 初始化Git仓库...
@@ -32,17 +28,17 @@ git commit -m "Initial commit: 萨姆·奥尔特曼传记网站"
 
 REM 添加远程仓库
 echo 添加远程仓库...
-git remote add origin %repo_url%
+git remote add origin %repo_url% || git remote set-url origin %repo_url%
 
 REM 推送到远程仓库
 echo 推送到远程仓库...
-git push -u origin main || git push -u origin master
+git push -u origin master || git push -u origin main
 
 echo.
 echo === 部署完成! ===
 echo 请在GitHub仓库设置中启用GitHub Pages功能:
 echo 1. 访问 %repo_url:~0,-4%/settings/pages
-echo 2. 在Source部分选择'main'或'master'分支
+echo 2. 在Source部分选择'master'或'main'分支
 echo 3. 点击Save按钮
 echo 4. 几分钟后，您的网站将在GitHub Pages上线
 echo.
