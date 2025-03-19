@@ -11,7 +11,7 @@ if %ERRORLEVEL% neq 0 (
 )
 
 REM 获取GitHub仓库URL
-set /p repo_url=git@github.com:MikeYueng9911/test2.git (例如: https://github.com/username/repo.git): 
+set /p repo_url=https://github.com/MikeYueng9911/test2.git (例如: https://github.com/username/repo.git): 
 
 if "%repo_url%"=="" (
     echo 错误: 仓库URL不能为空
@@ -47,4 +47,5 @@ echo 3. 点击Save按钮
 echo 4. 几分钟后，您的网站将在GitHub Pages上线
 echo.
 echo 感谢使用此部署脚本!
+
 pause 
