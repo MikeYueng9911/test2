@@ -1,5 +1,9 @@
 # 萨姆·奥尔特曼 (Sam Altman) 个人传记网站
 
+## 在线访问
+您可以通过以下链接在线访问此网站：
+[https://mikeyueng9911.github.io/test2/](https://mikeyueng9911.github.io/test2/)
+
 这是一个关于OpenAI CEO萨姆·奥尔特曼的响应式个人传记网站，包含互动组件和精美的用户界面。
 
 ## 功能特点
