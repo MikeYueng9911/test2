@@ -157,4 +157,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 滚动时运行
     window.addEventListener('scroll', animateElements);
+
+    // 图片点击事件处理
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    document.body.appendChild(modal);
+
+    // 为所有图片添加点击事件
+    const images = document.querySelectorAll('.gallery-item img, .timeline-content img');
+    images.forEach(img => {
+        img.addEventListener('click', function() {
+            const modalImg = document.createElement('img');
+            modalImg.src = this.src;
+            modalImg.alt = this.alt;
+            modal.innerHTML = '';
+            modal.appendChild(modalImg);
+            modal.classList.add('active');
+        });
+    });
+
+    // 点击模态框关闭
+    modal.addEventListener('click', function() {
+        this.classList.remove('active');
+    });
 });
