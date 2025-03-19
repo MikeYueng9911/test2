@@ -38,29 +38,49 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroImage = document.getElementById('heroImage');
 
     // 加载Sam Altman的头像
-    loadImage(heroImage, 'https://upload.wikimedia.org/wikipedia/commons/2/26/Sam_Altman_cropped.jpg', function() {
-        // 图片加载后移除加载中文本
+    loadImage(heroImage, 'https://upload.wikimedia.org/wikipedia/commons/5/58/Sam_altman_by_cdsessums_%28cropped%29.jpg', function() {
+        // 图片加载后更新文本
         const loadingText = heroImage.nextElementSibling;
         if (loadingText) {
-            loadingText.textContent = 'Sam Altman / CC BY-SA';
+            loadingText.textContent = '萨姆·奥尔特曼 - OpenAI首席执行官';
         }
     });
 
     // 加载图片库的图片
     const galleryImages = [
         {
+            url: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Sam_Altman_-_DevSummit_2019.jpg',
+            alt: '萨姆·奥尔特曼在2023年OpenAI开发者大会上发表演讲'
+        },
+        {
             url: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Sam_Altman_2014.jpg',
-            alt: '萨姆·奥尔特曼在会议上'
+            alt: '萨姆·奥尔特曼在OpenAI总部'
         },
         {
-            url: 'https://images.wsj.net/im-871652',
-            alt: '萨姆·奥尔特曼在OpenAI办公室'
-        },
-        {
-            url: 'https://www.ft.com/__origami/service/image/v2/images/raw/https%3A%2F%2Fd1e00ek4ebabms.cloudfront.net%2Fproduction%2F0bae1a42-7e35-4c0f-b0aa-e25db6a6250e.jpg?source=next-article&fit=scale-down&quality=highest&width=700&dpr=1',
+            url: 'https://live.staticflickr.com/65535/52744831160_532de84ec3_c.jpg',
             alt: '萨姆·奥尔特曼在演讲'
         }
     ];
+
+    // 加载时间线图片
+    const timelineImages = {
+        '2005': 'https://i.insider.com/6368b0166e35e90018fa5811?width=1000&format=jpeg',
+        '2014': 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Sam_Altman_2014.jpg',
+        '2015': 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Elon_Musk_and_Sam_Altman.jpg',
+        '2022': 'https://upload.wikimedia.org/wikipedia/commons/5/58/Sam_altman_by_cdsessums_%28cropped%29.jpg',
+        '2023': 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Sam_Altman_-_DevSummit_2019.jpg'
+    };
+
+    // 加载时间线图片
+    document.querySelectorAll('.timeline-item').forEach(item => {
+        const yearText = item.querySelector('.timeline-date').textContent;
+        const year = yearText.replace('年', '');
+        const img = item.querySelector('img');
+        
+        if (img && timelineImages[year]) {
+            loadImage(img, timelineImages[year]);
+        }
+    });
 
     galleryItems.forEach((item, index) => {
         const img = item.querySelector('img');
@@ -111,6 +131,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadImage(imgElement, src, callback) {
         if (!imgElement) return;
         
+        // 备用图片URL，如果主要图片加载失败
+        const fallbackSrc = 'https://upload.wikimedia.org/wikipedia/commons/5/58/Sam_altman_by_cdsessums_%28cropped%29.jpg';
+        
         const tempImage = new Image();
         tempImage.onload = function() {
             imgElement.src = src;
@@ -120,7 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         tempImage.onerror = function() {
             console.error('无法加载图片:', src);
-            imgElement.alt = '图片加载失败';
+            // 尝试加载备用图片
+            if (src !== fallbackSrc) {
+                console.log('尝试加载备用图片');
+                loadImage(imgElement, fallbackSrc);
+            } else {
+                imgElement.alt = '图片加载失败';
+            }
         };
         tempImage.src = src;
     }
